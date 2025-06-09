@@ -197,6 +197,68 @@
       audio {
         width: 100%;
       }
+
+      .gift-box {
+        transform: scale(0.8);
+      }
+    }
+
+    /* Caja de regalo animada */
+    .gift-box {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 40px auto;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      z-index: 2;
+    }
+
+    .lid {
+      width: 120px;
+      height: 30px;
+      background: #fdd835;
+      border-radius: 6px 6px 0 0;
+      position: absolute;
+      top: 0;
+      transition: transform 0.5s ease;
+      z-index: 3;
+    }
+
+    .box {
+      width: 120px;
+      height: 90px;
+      background: #ffc107;
+      border-radius: 0 0 6px 6px;
+      position: absolute;
+      top: 30px;
+      z-index: 2;
+    }
+
+    .ribbon {
+      width: 20px;
+      height: 120px;
+      background: #d32f2f;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      z-index: 4;
+      border-radius: 6px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .gift-opened .lid {
+      transform: rotateX(120deg) translateY(-60px);
+    }
+
+    #video-wrapper {
+      max-width: 600px;
+      margin: auto;
     }
   </style>
 </head>
@@ -274,6 +336,21 @@
   </div>
 </div>
 
+<!-- Caja de regalo y video -->
+<div class="center" id="gift-container">
+  <div class="gift-box" onclick="openGift()">
+    <div class="lid"></div>
+    <div class="box"></div>
+    <div class="ribbon"></div>
+  </div>
+  <div id="video-wrapper" style="display:none; margin-top: 20px;">
+    <video id="gift-video" width="100%" controls>
+      <source src="video-sorpresa.mp4" type="video/mp4" />
+      Tu navegador no soporta video HTML5.
+    </video>
+  </div>
+</div>
+
 <footer>Desarrollado con admiración para la Lic. Shaira 🖤</footer>
 
 <script>
@@ -307,6 +384,21 @@
     } else {
       player.pause();
       player.removeAttribute("src");
+    }
+  }
+
+  function openGift() {
+    const gift = document.querySelector(".gift-box");
+    const lid = document.querySelector(".lid");
+    const wrapper = document.getElementById("video-wrapper");
+    const video = document.getElementById("gift-video");
+
+    if (!gift.classList.contains("gift-opened")) {
+      gift.classList.add("gift-opened");
+      setTimeout(() => {
+        wrapper.style.display = "block";
+        video.play();
+      }, 800);
     }
   }
 </script>
