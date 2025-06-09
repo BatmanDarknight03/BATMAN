@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lic. Shaira - Regalo Especial</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #000, #1a1a1a);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 40px;
+      color: #fdd835;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .gift-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      perspective: 1000px;
+    }
+
+    .gift-box {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: floatGift 3s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    @keyframes floatGift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .box {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fdd835;
+      border: 4px solid #fff176;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+      z-index: 1;
+    }
+
+    .lid {
+      position: absolute;
+      width: 100%;
+      height: 40%;
+      top: 0;
+      background: #fbc02d;
+      border-radius: 10px 10px 0 0;
+      transform-origin: bottom center;
+      z-index: 2;
+      transition: transform 1s ease;
+    }
+
+    .ribbon {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 100%;
+      background: red;
+      z-index: 3;
+    }
+
+    .gift-open .lid {
+      transform: rotateX(-140deg);
+    }
+
+    .sparkles {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      opacity: 0;
+      z-index: 4;
+      animation: spark 2s ease forwards;
+    }
+
+    @keyframes spark {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+      50% {
+        width: 200px;
+        height: 200px;
+        opacity: 1;
+      }
+      100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+    }
+
+    .video-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(0, 0, 0, 0.95);
+      border: 2px solid #fdd835;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #fdd835;
+      padding: 15px;
+      z-index: 10;
+      display: none;
+      animation: popup 0.8s ease forwards;
+    }
+
+    @keyframes popup {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .video-popup video {
+      width: 90vw;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+
+    .close-btn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #fdd835;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .close-btn:hover {
+      background: #fff176;
+    }
+
+    @media (max-width: 500px) {
+      header {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .gift-container {
+        width: 150px;
+        height: 150px;
+      }
+
+      .video-popup video {
+        width: 95vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>🎁 Un regalo especial para la Licenciada Shaira 🖤</header>
+
+  <div class="gift-container" onclick="openGift()">
+    <div class="gift-box" id="giftBox">
+      <div class="lid"></div>
+      <div class="box"></div>
+      <div class="ribbon"></div>
+      <div class="sparkles" id="sparkles">
+        <img src="https://i.gifer.com/YkP6.gif" width="150" alt="Sparkles">
+      </div>
+    </div>
+  </div>
+
+  <div class="video-popup" id="videoPopup">
+    <video id="specialVideo" controls autoplay>
+      <source src="video_increible.MOV" type="video/MOV" />
+      Tu navegador no soporta video HTML5.
+    </video>
+    <br />
+    <button class="close-btn" onclick="closeVideo()">Cerrar</button>
+  </div>
+
+  <script>
+    function openGift() {
+      const box = document.getElementById('giftBox');
+      const sparkles = document.getElementById('sparkles');
+      const popup = document.getElementById('videoPopup');
+      const video = document.getElementById('specialVideo');
+
+      box.classList.add('gift-open');
+      sparkles.style.display = 'block';
+
+      setTimeout(() => {
+        popup.style.display = 'block';
+        video.currentTime = 0;
+        video.play();
+      }, 1600);
+    }
+
+    function closeVideo() {
+      const popup = document.getElementById('videoPopup');
+      const video = document.getElementById('specialVideo');
+      popup.style.display = 'none';
+      video.pause();
+    }
+  </script>
+
+</body>
+</html>
